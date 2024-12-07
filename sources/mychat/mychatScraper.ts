@@ -1,6 +1,6 @@
 import { db } from "@/db/db";
 import { blocksTable } from "@/db/schema/blocks";
-import { generateEmbedding, stringifyEmbedding } from "@/lib/embedding";
+import { generateEmbedding, serializeVector } from "@/lib/embedding/embedding";
 import { ChunkerOutput } from "../source";
 import { eq } from "drizzle-orm";
 
@@ -83,7 +83,7 @@ export async function generateChatEmbeddings() {
       await db
         .insert(blocksTable)
         .values({
-          vector: stringifyEmbedding(embedding),
+          vector: serializeVector(embedding),
           content,
           webUrl: "https://mychat.com",
           interface: "mychat",
