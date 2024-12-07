@@ -18,3 +18,19 @@ export async function generateEmbedding(input: string): Promise<number[]> {
 export function stringifyEmbedding(embedding: number[]): string {
   return `[${embedding.join(", ")}]`;
 }
+
+export function serializeVector(vector: number[]): Buffer {
+  const buffer = Buffer.alloc(vector.length * 8); // 8 bytes per double
+  vector.forEach((num, index) => {
+    buffer.writeDoubleLE(num, index * 8);
+  });
+  return buffer;
+}
+
+export function deserializeVector(buffer: Buffer): number[] {
+  const vector: number[] = [];
+  for (let i = 0; i < buffer.length; i += 8) {
+    vector.push(buffer.readDoubleLE(i));
+  }
+  return vector;
+}
