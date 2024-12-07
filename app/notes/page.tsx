@@ -1,6 +1,7 @@
 import { db } from "@/db/db";
 import { notesTable } from "@/db/schema";
-import { Fragment } from "react";
+import { AddNote } from "@/lib/notes/AddNote";
+import { RemoveNote } from "@/lib/notes/RemoveNote";
 
 export default async function Notes() {
   const notes = await db.select().from(notesTable).all();
@@ -8,10 +9,12 @@ export default async function Notes() {
     <>
       <h1>Notes</h1>
       {notes.map((note) => (
-        <Fragment key={note.id}>
+        <div key={note.id} className="flex">
           <p>{note.text}</p>
-        </Fragment>
+          <RemoveNote note={note} />
+        </div>
       ))}
+      <AddNote />
     </>
   );
 }
