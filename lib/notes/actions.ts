@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import { notesTable } from "@/db/schema";
+import { notesTable } from "@/db/schema/blocks";
 import { eq } from "drizzle-orm";
 
 export async function createNote({ text }) {

@@ -1,5 +1,5 @@
 "use client";
-import { deleteNote } from "./actions";
+import { deleteNote } from "../lib/notes/actions";
 
 export function RemoveNote({ note }) {
   return (

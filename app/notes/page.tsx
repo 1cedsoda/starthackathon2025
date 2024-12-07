@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
-import { notesTable } from "@/db/schema";
-import { AddNote } from "@/lib/notes/AddNote";
-import { RemoveNote } from "@/lib/notes/RemoveNote";
+import { notesTable } from "@/db/schema/blocks";
+import { AddNote } from "@/components/AddNote";
+import { RemoveNote } from "@/components/RemoveNote";
 
 export default async function Notes() {
   const notes = await db.select().from(notesTable).all();

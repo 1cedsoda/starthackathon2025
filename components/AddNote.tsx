@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createNote } from "./actions";
+import { createNote } from "../lib/notes/actions";
 
 export function AddNote() {
   const [value, setValue] = useState<string | undefined>(undefined);
