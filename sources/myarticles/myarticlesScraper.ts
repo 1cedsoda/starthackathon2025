@@ -6,15 +6,24 @@ import { eq } from "drizzle-orm";
 
 type Article = {
   id: number;
+  publishedDate: string;
   participants: string[];
   author: string;
   title: string;
   content: string;
 };
 
-const articles: Article[] = [
+type ArticleInterfaceSource = {
+  articleId: number;
+  publishedDate: string;
+  startCharacterIndex: number;
+  endCharacterIndex: number;
+};
+
+export const articles: Article[] = [
   {
     id: 1,
+    publishedDate: "2021-01-01",
     participants: ["Alice", "Bob"],
     author: "Alice",
     title: "The superhero 'Bob Zapper'",
@@ -39,8 +48,10 @@ function splitByCharacters(text: string, maxCharacters: number): string[] {
   return result;
 }
 
-async function chunkArticle(article: Article): Promise<ChunkerOutput[]> {
-  const chunks: ChunkerOutput[] = [];
+async function chunkArticle(
+  article: Article
+): Promise<ChunkerOutput<ArticleInterfaceSource>[]> {
+  const chunks: ChunkerOutput<ArticleInterfaceSource>[] = [];
   // 8000 token limit
   // 1 token = 4 characters
   // split article into sections of 1000 or less characters
@@ -53,11 +64,12 @@ async function chunkArticle(article: Article): Promise<ChunkerOutput[]> {
       chunks.push({
         embedding,
         content,
-        interfaceSource: JSON.stringify({
+        interfaceSource: {
+          publishedDate: article.publishedDate,
           articleId: article.id,
           startCharacterIndex: i * 1000,
           endCharacterIndex: (i + 1) * 1000,
-        }),
+        },
       });
     })
   );
@@ -83,9 +95,11 @@ export async function generateArticleEmebeddings() {
         .values({
           vector: serializeVector(embedding),
           content,
-          webUrl: "https://myarticles.com",
+          webUrl:
+            "http://localhost:3000/myarticles/article/" +
+            interfaceSource.articleId,
           interface: "myarticles",
-          interfaceSource,
+          interfaceSource: JSON.stringify(interfaceSource),
         })
         .execute();
     });
