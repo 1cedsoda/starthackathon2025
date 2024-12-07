@@ -16,7 +16,15 @@ type Message = {
   message: string;
 };
 
-const chats: Chat[] = [
+type ChatInterfaceSource = {
+  chatId: number;
+  startMessageIndex: number;
+  startMessageDate: string;
+  endMessageIndex: number;
+  endMessageDate: string;
+};
+
+export const chats: Chat[] = [
   {
     id: 1,
     participants: ["Alice", "Bob"],
@@ -35,8 +43,10 @@ const chats: Chat[] = [
   },
 ];
 
-async function chunkChat(chat: Chat): Promise<ChunkerOutput[]> {
-  const chunks: ChunkerOutput[] = [];
+async function chunkChat(
+  chat: Chat
+): Promise<ChunkerOutput<ChatInterfaceSource>[]> {
+  const chunks: ChunkerOutput<ChatInterfaceSource>[] = [];
   // last 3 messages
   const messageBuffer: Message[] = [];
 
@@ -58,11 +68,13 @@ async function chunkChat(chat: Chat): Promise<ChunkerOutput[]> {
     chunks.push({
       embedding: await generateEmbedding(content),
       content,
-      interfaceSource: JSON.stringify({
+      interfaceSource: {
         chatId: chat.id,
         startMessageIndex: chat.messages.indexOf(message),
+        startMessageDate: message.date,
         endMessageIndex: chat.messages.indexOf(message) + 1,
-      }),
+        endMessageDate: message.date,
+      },
     });
   }
 
@@ -85,9 +97,9 @@ export async function generateChatEmbeddings() {
         .values({
           vector: serializeVector(embedding),
           content,
-          webUrl: "https://mychat.com",
+          webUrl: "http://localhost:3000/mychat/chat/" + interfaceSource.chatId,
           interface: "mychat",
-          interfaceSource,
+          interfaceSource: JSON.stringify(interfaceSource),
         })
         .execute();
     });
