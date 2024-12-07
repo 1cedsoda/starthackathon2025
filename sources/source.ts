@@ -5,10 +5,10 @@ import { eq } from "drizzle-orm";
 export const interfaces = ["myarticles", "mychat"] as const;
 export type Interface = (typeof interfaces)[number];
 
-export type ChunkerOutput = {
+export type ChunkerOutput<IS> = {
   embedding: number[];
   content: string;
-  interfaceSource: string;
+  interfaceSource: IS;
 };
 
 export async function getBlocks(ids: number[]): Promise<Block[]> {

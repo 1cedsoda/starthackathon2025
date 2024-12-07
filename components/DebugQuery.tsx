@@ -1,11 +1,13 @@
 "use client";
 
-import { embeddingQuery } from "@/lib/embedding/actions";
+import { RequestEmbeddingQueryResult } from "@/app/api/query/route";
 import { useState } from "react";
 
 export function DebugQuery() {
   const [value, setValue] = useState<string | undefined>(undefined);
-  const [result, setResult] = useState<any | undefined>(undefined);
+  const [result, setResult] = useState<RequestEmbeddingQueryResult | undefined>(
+    undefined
+  );
   return (
     <div className="flex">
       <input
@@ -17,7 +19,13 @@ export function DebugQuery() {
       <button
         onClick={async () => {
           // reload page
-          const res = await embeddingQuery("Who is Bob Zapper?", "username");
+          const res = await fetch("/api/query", {
+            method: "POST",
+            body: value,
+            headers: {
+              Authorization: "Bearer " + "Alice",
+            },
+          }).then((res) => res.json());
           console.log(res);
           setResult(res);
         }}
