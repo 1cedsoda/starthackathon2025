@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Hero from "@/components/Hero";
 
-import { FaFigma } from "react-icons/fa";
 import { FiGitlab } from "react-icons/fi";
 import { RiNotionFill } from "react-icons/ri";
 import { BiLogoMicrosoftTeams } from "react-icons/bi";
@@ -25,7 +24,6 @@ export default function Home() {
       </div>
       <div className="flex mx-auto items-ceter max-w-3xl">
         <div className="flex max-w-3xl mx-auto items-center gap-8 pt-10 text-black">
-          <FaFigma className="h-6 w-6" />
           <FiGitlab className="h-6 w-6" />
           <RiNotionFill className="h-6 w-6" />
           <BiLogoMicrosoftTeams className="h-6 w-6" />
