@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 
-export default function Home() {
+export default function ChatPage() {
   return (
     <div className="absolute w-full bottom-0 pb-16">
       <div className="flex items-center mt-8 px-16 max-w-3xl mx-auto">

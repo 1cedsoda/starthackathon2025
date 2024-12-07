@@ -6,7 +6,7 @@ export default async function ChatPage({ params }) {
   const username = getUsernameServerside(await headers());
 
   // get path param chatId
-  const { chatId } = params;
+  const { chatId } = await params;
 
   const chat =
     typeof chatId === "string" && chats.find((c) => c.id.toString() === chatId);

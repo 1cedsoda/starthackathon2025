@@ -16,7 +16,7 @@ type Message = {
   message: string;
 };
 
-type ChatInterfaceSource = {
+export type ChatInterfaceSource = {
   chatId: number;
   startMessageIndex: number;
   startMessageDate: string;
@@ -50,33 +50,37 @@ async function chunkChat(
   // last 3 messages
   const messageBuffer: Message[] = [];
 
-  for (const message of chat.messages) {
-    // batch messages into chunks of 3
-    if (messageBuffer.length >= 1) {
-      // remove leftest message from messageBuffer.
-      messageBuffer.shift();
-    }
-    messageBuffer.push(message);
-    if (messageBuffer.length < 1) {
-      continue;
-    }
+  await Promise.all(
+    chat.messages.map(async (message, i) => {
+      // batch messages into chunks of 3
+      if (messageBuffer.length >= 1) {
+        // remove leftest message from messageBuffer.
+        messageBuffer.shift();
+      }
+      messageBuffer.push(message);
+      if (messageBuffer.length < 1) {
+        return;
+      }
 
-    // convert to chunks
-    const content = messageBuffer
-      .map((m) => `at ${m.date} "${m.sender}" wrote "${m.message}"`)
-      .join(" then ");
-    chunks.push({
-      embedding: await generateEmbedding(content),
-      content,
-      interfaceSource: {
-        chatId: chat.id,
-        startMessageIndex: chat.messages.indexOf(message),
-        startMessageDate: message.date,
-        endMessageIndex: chat.messages.indexOf(message) + 1,
-        endMessageDate: message.date,
-      },
-    });
-  }
+      // convert to chunks
+      const content = messageBuffer
+        .map((m) => `at ${m.date} "${m.sender}" wrote "${m.message}"`)
+        .join(" then ");
+      chunks.push({
+        embedding: await generateEmbedding(content),
+        title: `Message #${i} between ${chat.participants.join(" and ")}`,
+        date: message.date,
+        content,
+        interfaceSource: {
+          chatId: chat.id,
+          startMessageIndex: chat.messages.indexOf(message),
+          startMessageDate: message.date,
+          endMessageIndex: chat.messages.indexOf(message) + 1,
+          endMessageDate: message.date,
+        },
+      });
+    })
+  );
 
   return chunks;
 }
@@ -90,14 +94,20 @@ export async function generateChatEmbeddings() {
 
   chats.map(async (chat) => {
     const chunks = await chunkChat(chat);
-    chunks.map(async ({ embedding, interfaceSource, content }) => {
+    chunks.map(async ({ embedding, interfaceSource, content, title, date }) => {
       console.log(`[Embedding]: Embedding chat chunk: ${interfaceSource}`);
       await db
         .insert(blocksTable)
         .values({
           vector: serializeVector(embedding),
           content,
-          webUrl: "http://localhost:3000/mychat/chat/" + interfaceSource.chatId,
+          title,
+          date,
+          webUrl:
+            "http://localhost:3000/mychat/chat/" +
+            interfaceSource.chatId +
+            "?message=" +
+            interfaceSource.startMessageIndex,
           interface: "mychat",
           interfaceSource: JSON.stringify(interfaceSource),
         })

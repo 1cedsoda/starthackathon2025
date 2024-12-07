@@ -6,7 +6,7 @@ export default async function ArticlePage({ params }) {
   const username = getUsernameServerside(await headers());
 
   // get path param chatId
-  const { articleId } = params;
+  const { articleId } = await params;
 
   const article =
     typeof articleId === "string" &&

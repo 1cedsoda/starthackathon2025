@@ -8,6 +8,10 @@ export const blocksTable = sqliteTable("blocks", {
   vector: blob().notNull(),
   // if possible web url like https://example.com
   webUrl: text().notNull(),
+  // title
+  title: text().notNull(),
+  // date
+  date: text(),
   // client that scraped the block and does the permisison check
   interface: text().notNull(),
   // source identification of the scraped content
