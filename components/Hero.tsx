@@ -7,7 +7,7 @@ export default function Hero() {
         className="text-6xl font-bold text-stroke"
         text="Crystal"
       />
-      <p className="text-muted-foreground pt-2">Insights that shine.</p>
+      <p className="text-muted-foreground pt-2">insights that shine.</p>
     </div>
   );
 }
