@@ -3,6 +3,7 @@ import OpenAI from "openai";
 export const openai = new OpenAI({
   apiKey:
     "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",
+    dangerouslyAllowBrowser: true
 });
 
 export async function generateEmbedding(input: string): Promise<number[]> {
@@ -33,4 +34,68 @@ export function deserializeVector(buffer: Buffer): number[] {
     vector.push(buffer.readDoubleLE(i));
   }
   return vector;
+}
+
+
+export async function innovate(input: string): Promise<any> {
+  // Referenzen abrufen
+  const references = (await (
+    await fetch("/api/query", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("username")}`,
+      },
+      method: "POST",
+      body: JSON.stringify({ query: input }),
+    })
+  ).json()) as { result: { allowed: boolean; content: string }[] };
+
+  // Erlaubte Referenzen filtern
+  const allowedReferences = references.result.filter(
+    (reference) => reference.allowed
+  );
+
+  console.log("Allowed References:", allowedReferences);
+
+
+  // OpenAI API-Aufruf
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages:[
+      {
+        role: "system",
+        content: `
+          You are an innovation specialist. Given an input process, respond ONLY with a valid JSON in the following structure:
+          {
+            "metrics": [
+              { "label": "Timeline", "value": "6-9 Months", "iconColor": "text-blue-500" },
+              { "label": "Risk Level", "value": "Medium", "iconColor": "text-yellow-500" },
+              { "label": "Optimization Value", "value": "€750k - €1.2M", "iconColor": "text-green-500" }
+            ],
+            "processDescription": "Detailed description of the process optimization.",
+            "companyAnalysis": "Company analysis focusing on areas of improvement.",
+            "steps": [
+              { "title": "Step Title", "description": "Detailed description of the step." },
+              { "title": "Step Title", "description": "Detailed description of the step." }
+            ]
+          }` + 
+          (allowedReferences.length > 0
+            ? `\nCONTEXT:\n${allowedReferences.map((z) => z.content).join("\n")}`
+            : ""),
+      },
+      {
+        role: "user",
+        content: `Generate innovation insights for the process: ${input}`,
+      },
+    ],
+  });
+
+  // Ergebnis zurückgeben
+  const content = completion.choices[0]?.message?.content;
+
+  try {
+    return content ? JSON.parse(content) : null;
+  } catch (error) {
+    console.error("Error parsing JSON from OpenAI:", error);
+    return null;
+  }
 }

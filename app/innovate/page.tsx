@@ -19,25 +19,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SparklesText from "@/components/ui/sparkles-text";
+import { innovate } from "@/lib/embedding/embedding";
 
 // Define types for our data structures
-interface ProcessMetric {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-  iconColor: string;
-}
-
-interface Step {
+interface InnovationStep {
   title: string;
   description: string;
-}
-
-interface InnovationResult {
-  metrics: ProcessMetric[];
-  processDescription: string;
-  companyAnalysis: string;
-  steps: Step[];
 }
 
 const initialStates = [
@@ -46,26 +33,59 @@ const initialStates = [
   "📊 Generating optimization strategy ...",
 ];
 
-const initialMetrics: ProcessMetric[] = [
-  {
-    icon: TimerIcon,
-    label: "Timeline",
-    value: "6-9 Months",
-    iconColor: "text-blue-500",
-  },
-  {
-    icon: AlertCircle,
-    label: "Risk Level",
-    value: "Medium",
-    iconColor: "text-yellow-500",
-  },
-  {
-    icon: TrendingUpIcon,
-    label: "Optimization Value",
-    value: "€750k - €1.2M",
-    iconColor: "text-green-500",
-  },
-];
+interface InnovationResult {
+  metrics: ProcessMetric[];
+  processDescription: string;
+  companyAnalysis: string;
+  steps: InnovationStep[];
+}
+
+interface ProcessMetric {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  iconColor: string;
+}
+
+const fallbackResult: InnovationResult = {
+  metrics: [
+    { icon: TimerIcon, label: "Timeline", value: "6-9 Months", iconColor: "text-blue-500" },
+    { icon: AlertCircle, label: "Risk Level", value: "Medium", iconColor: "text-yellow-500" },
+    { icon: TrendingUpIcon, label: "Optimization Value", value: "€750k - €1.2M", iconColor: "text-green-500" },
+  ],
+  processDescription:
+    "Innovative approach for optimizing the process. The current method involves manual steps that can be streamlined.",
+  companyAnalysis:
+    "Comprehensive analysis reveals opportunities for efficiency improvements and cost reduction.",
+  steps: [
+    { title: "Process Mapping", description: "Detailed mapping to identify bottlenecks." },
+    { title: "AI Integration", description: "Implement AI-driven solutions for repetitive tasks." },
+    { title: "Continuous Improvement", description: "Establish a feedback loop for ongoing optimization." },
+  ],
+};
+
+const fetchInnovationInsights = async (process: string): Promise<InnovationResult> => {
+  try {
+    const completion = await innovate(process);
+
+    console.log(completion);
+    console.log(completion.choices[0]?.message?.content);
+let content = completion.choices[0]?.message?.content;
+
+    if (content) {
+      // Bereinige die Antwort: Entferne "```json" und abschließende ```
+      content = content.replace(/```json\s*|\s*```/g, "").trim();
+
+      // Parsen der bereinigten JSON-Daten
+      return JSON.parse(content);
+    }
+
+    return fallbackResult;
+  } catch (error) {
+    console.error("Error fetching from innovation API:", error);
+    return fallbackResult;
+  }
+};
 
 export default function Innovate() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,32 +95,6 @@ export default function Innovate() {
   const [processToOptimize, setProcessToOptimize] = useState("");
   const [innovationResult, setInnovationResult] = useState<InnovationResult | null>(null);
   const [states] = useState(initialStates);
-
-  // Simulated AI API call (replace with actual ChatGPT API)
-  const fetchInnovationInsights = async (process: string): Promise<InnovationResult> => {
-    // Simulating an API call with a delay
-    await new Promise(resolve => setTimeout(resolve, 3000));
-
-    return {
-      metrics: initialMetrics,
-      processDescription: `Innovative approach for optimizing the ${process} process. The current method involves manual steps that can be streamlined through advanced AI and automation technologies.`,
-      companyAnalysis: `Comprehensive analysis of ${process} reveals multiple opportunities for efficiency improvements and cost reduction.`,
-      steps: [
-        {
-          title: "Process Mapping",
-          description: `Detailed mapping of current ${process} workflow to identify bottlenecks.`
-        },
-        {
-          title: "AI Integration",
-          description: "Implement AI-driven solutions to automate repetitive tasks."
-        },
-        {
-          title: "Continuous Improvement",
-          description: "Establish a feedback loop for ongoing process optimization."
-        }
-      ]
-    };
-  };
 
   const handleSubmit = async (e: React.FormEvent, suggestedProcess?: string) => {
     e.preventDefault();
@@ -206,7 +200,6 @@ export default function Innovate() {
                 <div className="grid grid-cols-3 gap-4 bg-gray-50 rounded-lg p-4">
                   {innovationResult?.metrics.map((metric, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <metric.icon className={`w-5 h-5 ${metric.iconColor}`} />
                       <div>
                         <div className="text-xs text-gray-500">
                           {metric.label}
