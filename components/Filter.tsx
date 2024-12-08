@@ -1,40 +1,23 @@
+import Whatsapp from "@/public/whatsapp.svg";
+import Confluence from "@/public/confluence.svg";
+import { KeyRound } from "lucide-react";
+
 export default function Filter() {
   return (
-    <div className="flex justify-center p-4">
-      <div style={{ display: "flex", gap: "7px" }}>
-        <div className="flex flex-col items-end space-y-2">
-          <div className="transition-all border border-2 border-foreground hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Teams</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Sharepoint</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Outlook</span>
-          </div>
-          <div className="transition-all border border-2 border-foreground hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">GitLab</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">WhatsApp</span>
-          </div>
+    <div className="flex flex-col gap-4">
+      <h2 className="text-md font-bold text-gray-500">ACTIVE INTEGRATIONS</h2>
+      <div className="flex gap-4">
+        <div className="flex flex-col items-center gap-2 p-4 border-gray-400  border rounded-2xl">
+          <Whatsapp className="h-12 w-12" />
+          <span className="text-sm text-gray-500">Whatsapp</span>
         </div>
-        <div className="flex flex-col items-start space-y-2">
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Slack</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Notion</span>
-          </div>
-          <div className="transition-all border border-2 border-foreground hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">SalesForce</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Gmail</span>
-          </div>
-          <div className="transition-all border border-2 bg-muted border-muted hover:border-muted-foreground text-foreground hover:text-foreground hover:cursor-pointer rounded px-1.5 py-0">
-            <span className="text-sm">Discord</span>
-          </div>
+        <div className="flex flex-col items-center gap-2 p-4 border-gray-400 border rounded-2xl">
+          <Confluence className="h-12 w-12" />
+          <span className="text-sm text-gray-500">Confluence</span>
+        </div>
+        <div className="flex flex-col items-center gap-2 p-4 border-gray-200 border rounded-2xl">
+          <KeyRound className="h-12 w-12" color="#E5E7EB" />
+          <span className="text-sm text-gray-400">Add</span>
         </div>
       </div>
     </div>

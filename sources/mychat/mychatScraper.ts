@@ -113,7 +113,7 @@ export async function generateChatEmbeddings() {
           title,
           date,
           webUrl:
-            "http://localhost:3000/mychat/chat/" +
+            "https://web.whatsapp.com/chat/" +
             interfaceSource.chatId +
             "?message=" +
             interfaceSource.startMessageIndex,

@@ -15,6 +15,7 @@ import { useCallback, useState } from "react";
 import { EmbeddingQueryResult } from "@/lib/embedding/actions";
 import { ReferenceCard } from "@/components/ReferenceCard";
 import { RequestEmbeddingQueryResult } from "./api/query/route";
+import Filter from "@/components/Filter";
 
 export default function Home() {
   const [input, setInput] = useState("");
@@ -48,18 +49,18 @@ export default function Home() {
           <ArrowRight className="h-10 w-10" />
         </Button>
       </div>
-      <div className="flex mx-auto items-ceter max-w-3xl pb-8">
-        <div className="flex max-w-3xl mx-auto items-center gap-8 pt-10 text-black">
-          <FiGitlab className="h-6 w-6" />
-          <RiNotionFill className="h-6 w-6" />
-          <BiLogoMicrosoftTeams className="h-6 w-6" />
-          <PiMicrosoftOutlookLogo className="h-6 w-6" />
-          <FaSlack className="h-6 w-6" />
-        </div>
+      <div className="flex mx-auto items-center w-[40rem] pt-8">
+        <Filter />
       </div>
       {!references && (
         <>
-          <div className="mt-10 max-w-3xl mx-auto">
+          <div className="mx-auto w-[40rem] mt-10 ">
+            <h2 className="text-md font-bold text-gray-500">
+              MORE INTEGRATIONS
+            </h2>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
             <IconMarquee />
           </div>
         </>
