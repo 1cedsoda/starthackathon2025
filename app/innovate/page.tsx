@@ -99,11 +99,11 @@ export default function Innovate() {
   const handleSubmit = async (e: React.FormEvent, suggestedProcess?: string) => {
     e.preventDefault();
     const processInput = suggestedProcess || inputValue.trim();
-    
+
     if (processInput) {
       setIsLoading(true);
       setProcessToOptimize(processInput);
-      
+
       try {
         const result = await fetchInnovationInsights(processInput);
         setInnovationResult(result);
@@ -152,6 +152,7 @@ export default function Innovate() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="w-full"
+                onKeyDown={(e) => e.key === "Enter" ? handleSubmit(e) : null}
               />
               <Button
                 type="submit"

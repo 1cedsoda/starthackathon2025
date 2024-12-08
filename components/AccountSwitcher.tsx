@@ -3,10 +3,10 @@ import Image from "next/image";
 export function AccountSwitcher() {
   const toggleUser = () => {
     const username = window.localStorage.getItem("username");
-    if (username === "Bob") {
-      window.localStorage.setItem("username", "Alice");
+    if (username === "Marcus") {
+      window.localStorage.setItem("username", "Carol");
     } else {
-      window.localStorage.setItem("username", "Bob");
+      window.localStorage.setItem("username", "Marcus");
     }
     window.location.reload();
   };

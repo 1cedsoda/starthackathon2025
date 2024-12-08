@@ -23,7 +23,7 @@ export function DebugQuery() {
             method: "POST",
             body: value,
             headers: {
-              Authorization: "Bearer " + "Alice",
+              Authorization: "Bearer " + "Carol",
             },
           }).then((res) => res.json());
           console.log(res);

@@ -11,6 +11,7 @@ import { RequestEmbeddingQueryResult } from "../api/query/route";
 import { ReferenceCard } from "@/components/ReferenceCard";
 import { EmbeddingQueryResultAllowed } from "@/lib/embedding/actions";
 import { ReferenceCardChat } from "@/components/ReferenceCardChat";
+import SparklesText from "@/components/ui/sparkles-text";
 
 type UserMessage = {
   role: "user";
@@ -105,8 +106,12 @@ export default function ChatPage() {
   return (
     <>
       <div className="flex flex-col w-[40rem] gap-4 mx-auto min-h-screen">
-        <h1 className="text-3xl ">Chat with Crystal</h1>
+        <SparklesText
+          className="text-6xl font-bold text-stroke"
+          text="Chat with Crystal"
+        />
         <Filter />
+        <h2 className="text-md font-bold text-gray-500">CHAT</h2>
         {messages.map((message, index) => (
           <div key={index} className={`flex`}>
             {message.role === "user" && <div className="flex-1" />}
@@ -157,6 +162,7 @@ export default function ChatPage() {
             placeholder="Search your files"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => (e.key === "Enter" ? handleSendMessage() : null)}
           />
           <Button
             variant="outline"
