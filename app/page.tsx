@@ -34,6 +34,7 @@ export default function Home() {
     console.log(json);
     setReferences(json.result);
   }, [input]);
+
   return (
     <div className="">
       <div className="flex items-center mt-40 px-16 max-w-5xl mx-auto text-center">
@@ -44,6 +45,7 @@ export default function Home() {
           placeholder="Search your files"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => (e.key === "Enter" ? handleSearch() : null)}
         />
         <Button variant="outline" className="ml-2 " onClick={handleSearch}>
           <ArrowRight className="h-10 w-10" />

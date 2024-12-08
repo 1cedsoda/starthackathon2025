@@ -80,7 +80,7 @@ export default function Innovate() {
   const fetchInnovationInsights = async (process: string): Promise<InnovationResult> => {
     // Simulating an API call with a delay
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
+
     return {
       metrics: initialMetrics,
       processDescription: `Innovative approach for optimizing the ${process} process. The current method involves manual steps that can be streamlined through advanced AI and automation technologies.`,
@@ -105,11 +105,11 @@ export default function Innovate() {
   const handleSubmit = async (e: React.FormEvent, suggestedProcess?: string) => {
     e.preventDefault();
     const processInput = suggestedProcess || inputValue.trim();
-    
+
     if (processInput) {
       setIsLoading(true);
       setProcessToOptimize(processInput);
-      
+
       try {
         const result = await fetchInnovationInsights(processInput);
         setInnovationResult(result);
@@ -158,6 +158,7 @@ export default function Innovate() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="w-full"
+                onKeyDown={(e) => e.key === "Enter" ? handleSubmit(e) : null}
               />
               <Button
                 type="submit"
