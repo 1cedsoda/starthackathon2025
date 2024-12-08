@@ -27,18 +27,27 @@ export type ChatInterfaceSource = {
 export const chats: Chat[] = [
   {
     id: 1,
-    participants: ["Alice", "Bob"],
+    participants: ["Carol", "Marcus"],
     messages: [
-      { date: "2024-12-08", sender: "Alice", message: "Hello, Bob!" },
-      { date: "2024-12-08", sender: "Bob", message: "Hi, Alice!" },
+      { date: "2024-12-07", sender: "Carol", message: "Hello, Marcus" },
+      { date: "2024-12-07", sender: "Marcus", message: "Hey, Carol!" },
+      { date: "2024-12-07", sender: "Carol", message: "Are you joining our think tank at 7pm?" },
+      { date: "2024-12-07", sender: "Marcus", message: "Sure!" },
+      { date: "2024-12-08", sender: "Carol", message: "Hey, do you have an update on the marketing proposal for Project PLAY? Also please confirm the campaign launch date" },
+      { date: "2024-12-08", sender: "Marcus", message: "Hi Carol!" },
+      { date: "2024-12-08", sender: "Marcus", message: "I just reviewed it" },
+      { date: "2024-12-08", sender: "Marcus", message: "The final document is saved in the shared drive under 'Marketing/Projects/Project PLAY.' Let me know if you need me to make any further changes.The launch is scheduled for May 15. Also, did you already schedule the meeting with Felix for tomorrow?" },
+      { date: "2024-12-08", sender: "Carol", message: "Yes, I just sent an invite. Please inform him about the changes we made during yesterday’s think tank. I think he’s not in the mailing list..." },
     ],
   },
   {
     id: 2,
-    participants: ["Alice", "Charlie"],
+    participants: ["Marcus", "Felix"],
     messages: [
-      { date: "2024-12-08", sender: "Alice", message: "Hello, Charlie!" },
-      { date: "2024-12-08", sender: "Charlie", message: "Hi, Alice!" },
+      { date: "2024-12-08", sender: "Marcus", message: "Hello, Felix!" },
+      { date: "2024-12-08", sender: "Felix", message: "Hi, Marcus!" },
+      { date: "2024-12-08", sender: "Marcus", message: "In yesterday's think tank, we applied a few changes to the marketing proposal for Project PLAY. You can find them in the shared drive under 'Marketing/Projects/Project PLAY.' Please read through them and hit me up if you find any inconsistencies." },
+      { date: "2024-12-08", sender: "Felix", message: "Done, everything's fine! :)" },
     ],
   },
 ];
