@@ -45,7 +45,7 @@ export async function innovate(input: string): Promise<any> {
         Authorization: `Bearer ${localStorage.getItem("username")}`,
       },
       method: "POST",
-      body: JSON.stringify({ query: input }),
+      body: JSON.stringify({ query: input + "Müller"}),
     })
   ).json()) as { result: { allowed: boolean; content: string }[] };
 
