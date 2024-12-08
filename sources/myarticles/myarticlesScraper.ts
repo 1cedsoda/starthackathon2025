@@ -100,8 +100,7 @@ export async function generateArticleEmebeddings() {
           date,
           title,
           webUrl:
-            "http://localhost:3000/myarticles/article/" +
-            interfaceSource.articleId,
+            "http://confluence.mycompany.de/article/" + interfaceSource.articleId,
           interface: "myarticles",
           interfaceSource: JSON.stringify(interfaceSource),
         })
