@@ -68,7 +68,8 @@ export default function Home() {
         </>
       )}
       {references && (
-        <div className="mx-auto flex flex-col max-w-3xl gap-4">
+        <div className="mx-auto flex flex-col max-w-[40rem] gap-4">
+          <h2 className="text-md font-bold text-gray-500">SEARCH RESULTS</h2>
           {references.map((reference) => (
             <ReferenceCard key={reference.id} reference={reference} />
           ))}
