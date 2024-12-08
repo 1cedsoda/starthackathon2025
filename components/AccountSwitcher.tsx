@@ -15,7 +15,7 @@ export function AccountSwitcher() {
 
   return (
     <div className="flex gap-2 hover:text-foreground transition-all cursor-pointer">
-      <button onClick={toggleUser}>Hallo, @{username}</button>
+      <button onClick={toggleUser}>User: @{username}</button>
       <Image src="/crystal.png" alt="avatar" width={32} height={32} />
     </div>
   );

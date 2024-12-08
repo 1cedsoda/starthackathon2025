@@ -4,9 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 import OpenAI from "openai";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import Image from "next/image";
+import { RequestEmbeddingQueryResult } from "../api/query/route";
+import { ReferenceCard } from "@/components/ReferenceCard";
+import { EmbeddingQueryResultAllowed } from "@/lib/embedding/actions";
+import { ReferenceCardChat } from "@/components/ReferenceCardChat";
 
 type UserMessage = {
   role: "user";
@@ -22,8 +26,12 @@ type SystemMessage = {
   role: "system";
   content: string;
 };
+type ReferenceMessage = {
+  role: "reference";
+  content: EmbeddingQueryResultAllowed[];
+};
 
-type Message = UserMessage | BotMessage | SystemMessage;
+type Message = UserMessage | BotMessage | SystemMessage | ReferenceMessage;
 
 export const openai = new OpenAI({
   apiKey:
@@ -34,28 +42,65 @@ export const openai = new OpenAI({
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hello! How can I help you today?" },
-    { role: "user", content: "I need help with my taxes" },
-    {
-      role: "assistant",
-      content: "Sure! I can help with that. What's your question?",
-    },
   ]);
   const [input, setInput] = useState("");
+  useEffect(() => {
+    console.log("messages", messages);
+  }, [messages]);
   const handleSendMessage = useCallback(async () => {
+    // submit input
     setInput("");
-    setMessages([...messages, { role: "user", content: input }]);
+    const newMessages: Message[] = [
+      ...messages,
+      { role: "user", content: input },
+    ];
+    setMessages(newMessages);
+
+    // RAG
+    const references = (await (
+      await fetch("/api/query", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("username")}`,
+        },
+        method: "POST",
+        body: input,
+      })
+    ).json()) as RequestEmbeddingQueryResult;
+
+    const allowedRefrences = references.result.filter(
+      (reference) => reference.allowed
+    );
+
+    console.log("allowedRefrences", allowedRefrences);
+
+    if (allowedRefrences.length > 0) {
+      newMessages.push({
+        role: "system",
+        content:
+          `CONTEXT:\n` + allowedRefrences.map((z: any) => z.content).join("\n"),
+      });
+    }
+
+    console.log("requesting...", messages);
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [...messages, { role: "user", content: input }],
+      messages: newMessages.filter(
+        (message) => (message as any).role !== "reference"
+      ) as any,
     });
     const answer = completion.choices[0].message.content;
     if (answer) {
-      setMessages([
-        ...messages,
-        { role: "user", content: input },
-        { role: "assistant", content: answer },
-      ]);
+      console.log("answer", answer);
+      newMessages.push({ role: "assistant", content: answer });
     }
+
+    newMessages.push({
+      role: "reference",
+      content: allowedRefrences,
+    });
+
+    setMessages([...newMessages]);
   }, [input, messages]);
   return (
     <>
@@ -66,11 +111,15 @@ export default function ChatPage() {
           <div key={index} className={`flex`}>
             {message.role === "user" && <div className="flex-1" />}
             <div
-              className={`p-4 rounded-3xl flex gap-2 ${
+              className={`${
+                message.role != "reference" ? "p-4" : ""
+              } rounded-3xl flex gap-2 ${
                 message.role === "user"
                   ? "bg-blue-500 text-white rounded-br-none"
                   : message.role === "assistant"
                   ? "bg-gray-200 rounded-bl-none"
+                  : message.role === "reference"
+                  ? ""
                   : "display-none"
               }`}
             >
@@ -83,7 +132,20 @@ export default function ChatPage() {
                   className="aspect-square self-start"
                 />
               )}
-              <Markdown className="prose">{message.content}</Markdown>
+              {["user", "assistant"].includes(message.role) && (
+                <Markdown className="prose">
+                  {message.content as string}
+                </Markdown>
+              )}
+              {message.role === "reference" && (
+                <div className="flex flex-col gap-2 p-0 -mt-2">
+                  {(
+                    message.content as unknown as EmbeddingQueryResultAllowed[]
+                  ).map((reference, i) => (
+                    <ReferenceCardChat key={i} reference={reference} />
+                  ))}
+                </div>
+              )}
             </div>
             {message.role === "assistant" && <div className="flex-1" />}
           </div>
