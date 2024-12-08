@@ -39,7 +39,7 @@ export function IconMarquee() {
   const random1 = useMemo(() => Math.random(), []);
   const random2 = useMemo(() => Math.random(), []);
   return (
-    <div className="relative flex h-[200px] w-full flex-col items-center justify-center overflow-hidden">
+    <div className="relative flex h-[100px] pt-2 w-full flex-col items-center justify-center overflow-hidden">
       {/* Icons bewegen sich nach links */}
       <Marquee pauseOnHover className="[--duration:20s]">
         {randomizeOrder(icons, random1).map((icon) => (
