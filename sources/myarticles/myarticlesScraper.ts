@@ -23,7 +23,7 @@ export type ArticleInterfaceSource = {
 export const articles: Article[] = [
   {
     id: 1,
-    publishedDate: "2021-01-01",
+    publishedDate: "2024-12-08",
     participants: ["Alice", "Bob"],
     author: "Alice",
     title: "The superhero 'Bob Zapper'",

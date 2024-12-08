@@ -29,16 +29,16 @@ export const chats: Chat[] = [
     id: 1,
     participants: ["Alice", "Bob"],
     messages: [
-      { date: "2021-01-01", sender: "Alice", message: "Hello, Bob!" },
-      { date: "2021-01-02", sender: "Bob", message: "Hi, Alice!" },
+      { date: "2024-12-08", sender: "Alice", message: "Hello, Bob!" },
+      { date: "2024-12-08", sender: "Bob", message: "Hi, Alice!" },
     ],
   },
   {
     id: 2,
     participants: ["Alice", "Charlie"],
     messages: [
-      { date: "2021-01-01", sender: "Alice", message: "Hello, Charlie!" },
-      { date: "2021-01-02", sender: "Charlie", message: "Hi, Alice!" },
+      { date: "2024-12-08", sender: "Alice", message: "Hello, Charlie!" },
+      { date: "2024-12-08", sender: "Charlie", message: "Hi, Alice!" },
     ],
   },
 ];
