@@ -51,7 +51,7 @@ export default function Home() {
           <ArrowRight className="h-10 w-10" />
         </Button>
       </div>
-      <div className="flex mx-auto items-center w-[40rem] pt-8">
+      <div className="flex mx-auto items-center w-[40rem] py-8">
         <Filter />
       </div>
       {!references && (
