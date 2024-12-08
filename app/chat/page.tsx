@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight } from "lucide-react";
 
-export default function Home() {
+export default function ChatPage() {
   return (
     <div className="flex justify-center">
       <Filter />

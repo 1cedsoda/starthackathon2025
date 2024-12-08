@@ -9,6 +9,8 @@ export type ChunkerOutput<IS> = {
   embedding: number[];
   content: string;
   interfaceSource: IS;
+  title: string;
+  date: string | null;
 };
 
 export async function getBlocks(ids: number[]): Promise<Block[]> {

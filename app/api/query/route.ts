@@ -78,5 +78,5 @@ export async function embeddingQuery(
 }
 
 export type RequestEmbeddingQueryResult = {
-  reult: EmbeddingQueryResult[];
+  result: EmbeddingQueryResult[];
 };

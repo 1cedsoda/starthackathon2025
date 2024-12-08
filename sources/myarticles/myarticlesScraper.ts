@@ -13,7 +13,7 @@ type Article = {
   content: string;
 };
 
-type ArticleInterfaceSource = {
+export type ArticleInterfaceSource = {
   articleId: number;
   publishedDate: string;
   startCharacterIndex: number;
@@ -64,6 +64,8 @@ async function chunkArticle(
       chunks.push({
         embedding,
         content,
+        title: article.title,
+        date: article.publishedDate,
         interfaceSource: {
           publishedDate: article.publishedDate,
           articleId: article.id,
@@ -88,13 +90,15 @@ export async function generateArticleEmebeddings() {
     console.log(`[Embedding]: Seeding article: ${article.title}`);
     const chunks = await chunkArticle(article);
     console.log(chunks.length);
-    chunks.map(async ({ embedding, interfaceSource, content }) => {
+    chunks.map(async ({ embedding, interfaceSource, content, title, date }) => {
       console.log(`[Embedding]: Embedding article chunk: ${interfaceSource}`);
       await db
         .insert(blocksTable)
         .values({
           vector: serializeVector(embedding),
           content,
+          date,
+          title,
           webUrl:
             "http://localhost:3000/myarticles/article/" +
             interfaceSource.articleId,
