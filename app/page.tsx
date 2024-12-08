@@ -5,11 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Hero from "@/components/Hero";
 
-import { FiGitlab } from "react-icons/fi";
-import { RiNotionFill } from "react-icons/ri";
-import { BiLogoMicrosoftTeams } from "react-icons/bi";
-import { PiMicrosoftOutlookLogo } from "react-icons/pi";
-import { FaSlack } from "react-icons/fa";
 import { IconMarquee } from "@/components/IconMarquee";
 import { useCallback, useState } from "react";
 import { EmbeddingQueryResult } from "@/lib/embedding/actions";
@@ -37,7 +32,7 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="flex items-center mt-40 px-16 max-w-5xl mx-auto text-center">
+      <div className="flex items-center mt-10 px-16 max-w-5xl mx-auto text-center">
         <Hero />
       </div>
       <div className="flex items-center mt-8 px-16 max-w-3xl mx-auto">
