@@ -24,7 +24,7 @@ export const articles: Article[] = [
   {
     id: 1,
     publishedDate: "2024-12-08",
-    participants: ["Carol", "Marcus"],
+    participants: ["Carol", "Marcus", "Felix"],
     author: "Carol",
     title: "Boss: Marcus Zapper",
     content:
@@ -35,7 +35,7 @@ export const articles: Article[] = [
   {
     id: 2,
     publishedDate: "2024-12-08",
-    participants: ["Marcus", "Carol"],
+    participants: ["Marcus", "Carol", "Felix"],
     author: "Marcus",
     title: "Chief of Marketing: Carol Medimacher",
     content:
@@ -47,7 +47,7 @@ export const articles: Article[] = [
   {
     id: 3,
     publishedDate: "2024-12-08",
-    participants: ["Carol", "Felix"],
+    participants: ["Marcus", "Carol", "Felix"],
     author: "Carol",
     title: "Marketing intern: Felix Flix",
     content:
@@ -59,7 +59,7 @@ export const articles: Article[] = [
   {
     id: 4,
     publishedDate: "2024-12-08",
-    participants: ["Marcus", "Carol"],
+    participants: ["Marcus", "Carol", "Felix"],
     author: "Carol",
     title: "Project PLAY",
     content:
@@ -84,6 +84,23 @@ export const articles: Article[] = [
       "Through strategic marketing efforts, Müller Mittelstand GmbH aims to\n" +
       "reach a broad audience, showcasing the platform's potential to transform\n" +
       "education and empower learners worldwide.",
+  },
+  {
+    id: 5,
+    publishedDate: "2024-12-08",
+    participants: ["Marcus"],
+    author: "Marcus",
+    title: "Battery Product Sales Report 2024",
+    content:
+      "The Battery Product Sales Report for 2024 provides an overview\n" +
+      "of the sales performance of EnergyMax Batteries over the year.\n" +
+      "The report highlights a total annual revenue of $1,683,000, with\n" +
+      "significant quarterly growth observed in Q1 and Q2, despite a slight\n" +
+      "dip in Q3. The product line is dominated by AA and AAA batteries,\n" +
+      "which together account for 75% of total sales. Sales distribution\n" +
+      "is primarily through retail stores and online marketplaces, which\n" +
+      "together constitute 75% of sales channels. Regionally, the North\n" +
+      "holds the largest market share with 32%, followed by the South at 29%.",
   },
 ];
 
