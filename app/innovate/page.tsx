@@ -76,6 +76,8 @@ let content = completion.choices[0]?.message?.content;
       // Bereinige die Antwort: Entferne "```json" und abschließende ```
       content = content.replace(/```json\s*|\s*```/g, "").trim();
 
+      console.log("Innovation API Response:", content);
+
       // Parsen der bereinigten JSON-Daten
       return JSON.parse(content);
     }

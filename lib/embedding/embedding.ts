@@ -49,7 +49,6 @@ export async function innovate(input: string): Promise<any> {
     })
   ).json()) as { result: { allowed: boolean; content: string }[] };
 
-  // Erlaubte Referenzen filtern
   const allowedReferences = references.result.filter(
     (reference) => reference.allowed
   );
@@ -89,11 +88,10 @@ export async function innovate(input: string): Promise<any> {
     ],
   });
 
-  // Ergebnis zurückgeben
-  const content = completion.choices[0]?.message?.content;
+
 
   try {
-    return content ? JSON.parse(content) : null;
+    return completion
   } catch (error) {
     console.error("Error parsing JSON from OpenAI:", error);
     return null;
