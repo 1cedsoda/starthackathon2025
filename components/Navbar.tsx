@@ -18,7 +18,7 @@ export default function Navbar() {
   console.log(params);
   return (
     <>
-      <div>
+      <div className="sticky top-0 py-2 bg-white/50 backdrop-blur-lg">
         <nav className="flex justify-between mx-10 my-8 text-muted-foreground">
           <ul>
             <div className="flex gap-4">
