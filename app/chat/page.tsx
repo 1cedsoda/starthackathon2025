@@ -162,6 +162,7 @@ export default function ChatPage() {
             placeholder="Search your files"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => (e.key === "Enter" ? handleSendMessage() : null)}
           />
           <Button
             variant="outline"
