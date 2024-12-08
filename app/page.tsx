@@ -24,7 +24,7 @@ export default function Home() {
   const handleSearch = useCallback(async () => {
     const res = await fetch("/api/query", {
       headers: {
-        Authorization: `Bearer Bob`,
+        Authorization: `Bearer ${localStorage.getItem("username")}`,
       },
       method: "POST",
       body: input,
