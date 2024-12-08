@@ -43,7 +43,7 @@ export async function embeddingQuery(
 ): Promise<EmbeddingQueryResult[]> {
   const embedding = await generateEmbedding(input);
 
-  const similarity = await vectorIndex.query(embedding);
+  const similarity = await vectorIndex.query(embedding, 0.7, 5);
 
   const blocks = await getBlocks(similarity.map((s) => s.value));
 

@@ -48,6 +48,8 @@ export function ReferenceCard({ reference }: Props) {
         </div>
         <a
           className="text-blue-500 text-sm"
+          target="_blank"
+          rel="noopener noreferrer"
           href={
             reference.interface == "mychat"
               ? "https://www.figma.com/proto/JtDotBMNkp4xAaHIDpxBEM/Whatsapp-(Community)?node-id=0-1&t=VxDNrwO9AvJ6Mhou-1"
