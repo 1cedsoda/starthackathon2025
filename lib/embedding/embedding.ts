@@ -74,6 +74,8 @@ export async function innovate(input: string): Promise<any> {
             "companyAnalysis": "Company analysis focusing on areas of improvement.",
             "steps": [
               { "title": "Step Title", "description": "Detailed description of the step." },
+              { "title": "Step Title", "description": "Detailed description of the step." },
+               { "title": "Step Title", "description": "Detailed description of the step." },
               { "title": "Step Title", "description": "Detailed description of the step." }
             ]
           }` + 
