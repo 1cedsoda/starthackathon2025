@@ -1,9 +1,8 @@
 import OpenAI from "openai";
 
 export const openai = new OpenAI({
-  apiKey:
-    "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",
-    dangerouslyAllowBrowser: true
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
 });
 
 export async function generateEmbedding(input: string): Promise<number[]> {
@@ -36,7 +35,6 @@ export function deserializeVector(buffer: Buffer): number[] {
   return vector;
 }
 
-
 export async function innovate(input: string): Promise<any> {
   // Referenzen abrufen
   const references = (await (
@@ -45,7 +43,7 @@ export async function innovate(input: string): Promise<any> {
         Authorization: `Bearer ${localStorage.getItem("username")}`,
       },
       method: "POST",
-      body: JSON.stringify({ query: input + "Müller"}),
+      body: JSON.stringify({ query: input + "Müller" }),
     })
   ).json()) as { result: { allowed: boolean; content: string }[] };
 
@@ -55,14 +53,14 @@ export async function innovate(input: string): Promise<any> {
 
   console.log("Allowed References:", allowedReferences);
 
-
   // OpenAI API-Aufruf
   const completion = await openai.chat.completions.create({
     model: "gpt-4o",
-    messages:[
+    messages: [
       {
         role: "system",
-        content: `
+        content:
+          `
           You are an innovation specialist. Given an input process, respond ONLY with a valid JSON in the following structure:
           {
             "metrics": [
@@ -78,9 +76,11 @@ export async function innovate(input: string): Promise<any> {
                { "title": "Step Title", "description": "Detailed description of the step." },
               { "title": "Step Title", "description": "Detailed description of the step." }
             ]
-          }` + 
+          }` +
           (allowedReferences.length > 0
-            ? `\nCONTEXT:\n${allowedReferences.map((z) => z.content).join("\n")}`
+            ? `\nCONTEXT:\n${allowedReferences
+                .map((z) => z.content)
+                .join("\n")}`
             : ""),
       },
       {
@@ -90,10 +90,8 @@ export async function innovate(input: string): Promise<any> {
     ],
   });
 
-
-
   try {
-    return completion
+    return completion;
   } catch (error) {
     console.error("Error parsing JSON from OpenAI:", error);
     return null;

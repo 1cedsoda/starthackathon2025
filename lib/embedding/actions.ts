@@ -1,15 +1,6 @@
 "use server";
 
-import { vectorIndex } from ".";
-import { generateEmbedding } from "./embedding";
-import {
-  Block,
-  BlockSecret,
-  BlockVectorless,
-  secritifyBlock,
-} from "@/db/schema/blocks";
-import { getBlocks } from "@/sources/source";
-import { getPermissions } from "../permission/permission";
+import { BlockSecret, BlockVectorless } from "@/db/schema/blocks";
 
 export type EmbeddingQueryResultAllowed = BlockVectorless & {
   similarity: number;
@@ -24,4 +15,3 @@ export type EmbeddingQueryResultDisallowed = BlockSecret & {
 export type EmbeddingQueryResult =
   | EmbeddingQueryResultAllowed
   | EmbeddingQueryResultDisallowed;
-

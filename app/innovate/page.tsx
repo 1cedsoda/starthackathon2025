@@ -49,28 +49,54 @@ interface ProcessMetric {
 
 const fallbackResult: InnovationResult = {
   metrics: [
-    { icon: TimerIcon, label: "Timeline", value: "6-9 Months", iconColor: "text-blue-500" },
-    { icon: AlertCircle, label: "Risk Level", value: "Medium", iconColor: "text-yellow-500" },
-    { icon: TrendingUpIcon, label: "Optimization Value", value: "€750k - €1.2M", iconColor: "text-green-500" },
+    {
+      icon: TimerIcon,
+      label: "Timeline",
+      value: "6-9 Months",
+      iconColor: "text-blue-500",
+    },
+    {
+      icon: AlertCircle,
+      label: "Risk Level",
+      value: "Medium",
+      iconColor: "text-yellow-500",
+    },
+    {
+      icon: TrendingUpIcon,
+      label: "Optimization Value",
+      value: "€750k - €1.2M",
+      iconColor: "text-green-500",
+    },
   ],
   processDescription:
     "Innovative approach for optimizing the process. The current method involves manual steps that can be streamlined.",
   companyAnalysis:
     "Comprehensive analysis reveals opportunities for efficiency improvements and cost reduction.",
   steps: [
-    { title: "Process Mapping", description: "Detailed mapping to identify bottlenecks." },
-    { title: "AI Integration", description: "Implement AI-driven solutions for repetitive tasks." },
-    { title: "Continuous Improvement", description: "Establish a feedback loop for ongoing optimization." },
+    {
+      title: "Process Mapping",
+      description: "Detailed mapping to identify bottlenecks.",
+    },
+    {
+      title: "AI Integration",
+      description: "Implement AI-driven solutions for repetitive tasks.",
+    },
+    {
+      title: "Continuous Improvement",
+      description: "Establish a feedback loop for ongoing optimization.",
+    },
   ],
 };
 
-const fetchInnovationInsights = async (process: string): Promise<InnovationResult> => {
+const fetchInnovationInsights = async (
+  process: string
+): Promise<InnovationResult> => {
   try {
     const completion = await innovate(process);
 
     console.log(completion);
     console.log(completion.choices[0]?.message?.content);
-let content = completion.choices[0]?.message?.content;
+    let content = completion.choices[0]?.message?.content;
 
     if (content) {
       // Bereinige die Antwort: Entferne "```json" und abschließende ```
@@ -95,10 +121,14 @@ export default function Innovate() {
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [processToOptimize, setProcessToOptimize] = useState("");
-  const [innovationResult, setInnovationResult] = useState<InnovationResult | null>(null);
+  const [innovationResult, setInnovationResult] =
+    useState<InnovationResult | null>(null);
   const [states] = useState(initialStates);
 
-  const handleSubmit = async (e: React.FormEvent, suggestedProcess?: string) => {
+  const handleSubmit = async (
+    e: React.FormEvent,
+    suggestedProcess?: string
+  ) => {
     e.preventDefault();
     const processInput = suggestedProcess || inputValue.trim();
 
@@ -154,7 +184,7 @@ export default function Innovate() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="w-full"
-                onKeyDown={(e) => e.key === "Enter" ? handleSubmit(e) : null}
+                onKeyDown={(e) => (e.key === "Enter" ? handleSubmit(e) : null)}
               />
               <Button
                 type="submit"
@@ -166,14 +196,18 @@ export default function Innovate() {
             </div>
           </form>
           <div className="flex flex-wrap justify-center gap-2">
-            {["Lead-To-Cash-Process", "Hire-To-Retire-Process", "Customer Retention"].map((process) => (
-              <Button 
-                key={process} 
-                variant="ghost" 
+            {[
+              "Lead-To-Cash-Process",
+              "Hire-To-Retire-Process",
+              "Customer Retention",
+            ].map((process) => (
+              <Button
+                key={process}
+                variant="ghost"
                 className="text-muted-foreground"
                 onClick={(e) => {
                   handleSubmit(
-                    { preventDefault: () => {} } as React.FormEvent, 
+                    { preventDefault: () => {} } as React.FormEvent,
                     process
                   );
                 }}

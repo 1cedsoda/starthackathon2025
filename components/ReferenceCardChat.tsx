@@ -1,5 +1,4 @@
 import { EmbeddingQueryResult } from "@/lib/embedding/actions";
-import { LockOpen, Lock } from "lucide-react";
 import Whatsapp from "@/public/whatsapp.svg";
 import Confluence from "@/public/confluence.svg";
 
@@ -25,11 +24,7 @@ export function ReferenceCardChat({ reference }: Props) {
                   className="text-blue-500 text-sm"
                   target="_blank"
                   rel="noopener noreferrer"
-                   href={
-                    reference.interface == "mychat"
-                      ? "https://www.figma.com/proto/JtDotBMNkp4xAaHIDpxBEM/Whatsapp-(Community)?node-id=0-1&t=VxDNrwO9AvJ6Mhou-1"
-                      : "https://foam-newsstand-609.notion.site/Battery-Product-Sales-Report-2024-156fbe6e82388092b983d437086bc056"
-                  }
+                  href={reference.webUrl}
                 >
                   {reference.title}
                 </a>

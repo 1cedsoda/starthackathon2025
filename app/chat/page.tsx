@@ -8,7 +8,6 @@ import { useCallback, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import Image from "next/image";
 import { RequestEmbeddingQueryResult } from "../api/query/route";
-import { ReferenceCard } from "@/components/ReferenceCard";
 import { EmbeddingQueryResultAllowed } from "@/lib/embedding/actions";
 import { ReferenceCardChat } from "@/components/ReferenceCardChat";
 import SparklesText from "@/components/ui/sparkles-text";
@@ -35,8 +34,7 @@ type ReferenceMessage = {
 type Message = UserMessage | BotMessage | SystemMessage | ReferenceMessage;
 
 export const openai = new OpenAI({
-  apiKey:
-    "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",
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 

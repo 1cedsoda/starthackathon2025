@@ -120,6 +120,6 @@ async function loadVectorIndex(): Promise<
   return res;
 }
 
-export let vectorIndex: VectorIndex<number> = new VectorIndex<number>(
+export const vectorIndex: VectorIndex<number> = new VectorIndex<number>(
   loadVectorIndex
 );

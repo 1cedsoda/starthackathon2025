@@ -6,7 +6,6 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { articleId: string } }
 ) {
-
   const headers = request.headers;
   const username = getUsernameServerside(headers);
 
